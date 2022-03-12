@@ -1,4 +1,5 @@
 ﻿using DemoAPI.Settings;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 
@@ -48,6 +49,8 @@ public static class ServiceCollectionExtension
     {
         // add 'MongoDbSettings' section to dependency container
         services.Configure<MongoDbSettings>(configuration.GetSection(nameof(MongoDbSettings)));
+         // get the current value from the appsettings.json section
+        services.AddSingleton<MongoDbSettings>(serviceProvider => serviceProvider.GetRequiredService<IOptionsMonitor<MongoDbSettings>>().CurrentValue);
 
         return services;
     }
