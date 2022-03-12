@@ -3,8 +3,8 @@ using DemoMongoRepository.Domain;
 
 namespace DemoMongoRepository.Model;
 
-[BsonCollection("Heroes")]
-internal class MongoHero : MongoDocument
+[BsonCollection("HeroCollection")]
+public class MongoHero : MongoDocument
 {
     public string Avatar { get; set; }
     public string Alias { get; set; }
@@ -12,7 +12,7 @@ internal class MongoHero : MongoDocument
     public Morality Morality { get; set; }
 }
 
-internal enum Elemental
+public enum Elemental
 {
     Nature,
     Fire,
@@ -20,7 +20,7 @@ internal enum Elemental
     Poison
 }
 
-internal enum Morality
+public enum Morality
 {
     SuperHero,
     Hero,

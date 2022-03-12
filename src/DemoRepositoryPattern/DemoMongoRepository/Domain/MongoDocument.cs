@@ -2,7 +2,7 @@
 
 namespace DemoMongoRepository.Domain;
 
-internal abstract class MongoDocument : IMongoDocument
+public abstract class MongoDocument : IMongoDocument
 {
     public ObjectId Id { get; set; }
 
