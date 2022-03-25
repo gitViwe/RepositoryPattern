@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDemoAPISettings(builder.Configuration);
 builder.Services.AddDemoAPIServices();
+builder.Services.AddWebAPIAutomapper();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -2,13 +2,13 @@
 
 namespace DemoMongoRepository.Model;
 
-public class MongoHeroRequest
+public class MongoVillainRequest
 {
     public string Id { get; set; }
     [Required]
-    public string Avatar { get; set; }
+    public string StreetName { get; set; }
     [Required]
-    public string Alias { get; set; }
+    public string Affiliation { get; set; }
     public List<Elemental> Elementals { get; set; } = new();
     public Morality Morality { get; set; }
 }

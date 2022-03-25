@@ -61,4 +61,11 @@ public static class ServiceCollectionExtension
 
         return services;
     }
+
+    internal static IServiceCollection AddWebAPIAutomapper(this IServiceCollection services)
+    {
+        services.AddAutoMapper(typeof(MongoRepository<>).GetTypeInfo().Assembly);
+
+        return services;
+    }
 }

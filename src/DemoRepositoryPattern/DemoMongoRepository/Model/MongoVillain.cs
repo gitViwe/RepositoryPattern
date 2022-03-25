@@ -3,11 +3,11 @@ using DemoMongoRepository.Domain;
 
 namespace DemoMongoRepository.Model;
 
-[BsonCollection("HeroCollection")]
-public class MongoHero : MongoDocument
+[BsonCollection("VillainCollection")]
+public class MongoVillain : MongoDocument
 {
-    public string Avatar { get; set; }
-    public string Alias { get; set; }
+    public string StreetName { get; set; }
+    public string Affiliation { get; set; }
     public List<Elemental> Elementals { get; set; } = new();
     public Morality Morality { get; set; }
 }

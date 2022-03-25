@@ -15,65 +15,65 @@ namespace DemoAPI.Controllers;
 [Produces(MediaTypeNames.Application.Json)]
 [Consumes(MediaTypeNames.Application.Json)]
 [ApiController]
-public class HeroController : ControllerBase
+public class VillainController : ControllerBase
 {
-    private readonly IMongoRepository<MongoHero> _repository;
+    private readonly IMongoRepository<MongoVillain> _repository;
     private readonly IMapper _mapper;
 
     /// <summary>
     /// Constructor injection
     /// </summary>
-    public HeroController(IMongoRepository<MongoHero> repository, IMapper mapper)
+    public VillainController(IMongoRepository<MongoVillain> repository, IMapper mapper)
     {
         _repository = repository;
         _mapper = mapper;
     }
 
     /// <summary>
-    /// Use this end point to query the Hero collection
+    /// Use this end point to query the Villain collection
     /// </summary>
-    /// <response code="200">Returns a collection of MongoHero documents from the database</response>
+    /// <response code="200">Returns a collection of MongoVillain documents from the database</response>
     [HttpGet]
     [Route(nameof(Get))]
-    [ProducesResponseType(typeof(Result<IEnumerable<MongoHeroRequest>>), 200)]
+    [ProducesResponseType(typeof(Result<IEnumerable<MongoVillainRequest>>), 200)]
     public IActionResult Get()
     {
         var data = _repository.AsQueryable().ToList();
 
-        var response = _mapper.Map<IEnumerable<MongoHeroRequest>>(data);
+        var response = _mapper.Map<IEnumerable<MongoVillainRequest>>(data);
 
-        return Ok(Result<IEnumerable<MongoHeroRequest>>.Success(response));
+        return Ok(Result<IEnumerable<MongoVillainRequest>>.Success(response));
     }
 
     /// <summary>
-    /// Use this end point to add to the Hero collection
+    /// Use this end point to add to the Villain collection
     /// </summary>
     /// <response code="200">Returns a response message</response>
     [HttpPost]
     [Route(nameof(Add))]
     [ProducesResponseType(typeof(Result), 200)]
-    public async Task<IActionResult> Add([FromBody] MongoHeroRequest request)
+    public async Task<IActionResult> Add([FromBody] MongoVillainRequest request)
     {
         if (ModelState.IsValid)
         {
-            var hero = _mapper.Map<MongoHero>(request);
+            var Villain = _mapper.Map<MongoVillain>(request);
 
-            await _repository.InsertOneAsync(hero);
+            await _repository.InsertOneAsync(Villain);
 
-            return Ok(Result.Success("Hero created!"));
+            return Ok(Result.Success("Villain created!"));
         }
 
         return Ok(Result.Fail(ModelState.GetModelErrors()));
     }
 
     /// <summary>
-    /// Use this end point to update a Hero
+    /// Use this end point to update a Villain
     /// </summary>
     /// <response code="200">Returns a response message</response>
     [HttpPut]
     [Route(nameof(Update))]
     [ProducesResponseType(typeof(Result), 200)]
-    public async Task<IActionResult> Update([FromBody] MongoHeroRequest request)
+    public async Task<IActionResult> Update([FromBody] MongoVillainRequest request)
     {
         if (ModelState.IsValid)
         {
@@ -84,18 +84,18 @@ public class HeroController : ControllerBase
                 return Ok(Result.Fail("Could not locate document"));
             }
 
-            var newDocunment = _mapper.Map<MongoHero>(request);
+            var newDocunment = _mapper.Map<MongoVillain>(request);
 
             await _repository.ReplaceOneAsync(newDocunment);
 
-            return Ok(Result.Success("Hero Updated!"));
+            return Ok(Result.Success("Villain Updated!"));
         }
 
         return Ok(Result.Fail(ModelState.GetModelErrors()));
     }
 
     /// <summary>
-    /// Use this end point to delete a Hero
+    /// Use this end point to delete a Villain
     /// </summary>
     /// <response code="200">Returns a response message</response>
     [HttpDelete]
@@ -117,6 +117,6 @@ public class HeroController : ControllerBase
 
         await _repository.DeleteByIdAsync(id);
 
-        return Ok(Result.Success("Hero Deleted!"));
+        return Ok(Result.Success("Villain Deleted!"));
     }
 }
