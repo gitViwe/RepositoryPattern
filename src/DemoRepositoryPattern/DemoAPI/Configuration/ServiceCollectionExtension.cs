@@ -1,5 +1,8 @@
-﻿using DemoMongoRepository;
+﻿using DemoEntityFrameworkRepository.Context;
+using DemoEntityFrameworkRepository.Settings;
+using DemoMongoRepository;
 using DemoMongoRepository.Settings;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
@@ -48,8 +51,13 @@ public static class ServiceCollectionExtension
     {
         // add 'MongoDbSettings' section to dependency container
         services.Configure<MongoDbSettings>(configuration.GetSection(nameof(MongoDbSettings)));
-         // get the current value from the appsettings.json section
+
+        // add 'SQLSettings' section to dependency container
+        services.Configure<SQLSettings>(configuration.GetSection(nameof(SQLSettings)));
+
+        // get the current value from the appsettings.json section
         services.AddSingleton(serviceProvider => serviceProvider.GetRequiredService<IOptionsMonitor<MongoDbSettings>>().CurrentValue);
+        services.AddSingleton(serviceProvider => serviceProvider.GetRequiredService<IOptionsMonitor<SQLSettings>>().CurrentValue);
 
         return services;
     }
@@ -64,7 +72,20 @@ public static class ServiceCollectionExtension
 
     internal static IServiceCollection AddWebAPIAutomapper(this IServiceCollection services)
     {
-        services.AddAutoMapper(typeof(MongoRepository<>).GetTypeInfo().Assembly);
+        // specify assemblies to scan
+        var assemblies = new Assembly[] { typeof(MongoRepository<>).GetTypeInfo().Assembly };
+
+        services.AddAutoMapper(assemblies);
+
+        return services;
+    }
+
+    internal static IServiceCollection AddWebAPIDbContext(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddDbContext<RepositoryContext>(options =>
+        {
+            options.UseSqlServer(configuration["SQLSettings:ConnectionString"], builder => builder.MigrationsAssembly(typeof(Program).GetTypeInfo().Assembly.GetName().Name));
+        });
 
         return services;
     }

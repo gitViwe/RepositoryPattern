@@ -14,10 +14,12 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DemoEntityFrameworkRepository\DemoEntityFrameworkRepository.csproj" />
     <ProjectReference Include="..\DemoMongoRepository\DemoMongoRepository.csproj" />
   </ItemGroup>
 
